@@ -1,25 +1,45 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
-function App() {
+const generateRandomColor = () => {
+  const hue = Math.floor(Math.random() * 360);
+  const saturation = Math.floor(Math.random() * 50) + 50;
+  const lightness = Math.floor(Math.random() * 40) + 60;
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+const DividedScreen = ({ backgroundColor }) => {
+  const [divided, setDivided] = useState(false);
+
+  const handleDivide = () => {
+    setDivided(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className={`divided-screen ${divided ? "divided" : ""}`}
+      style={{ backgroundColor }}
+      onClick={handleDivide}
+    >
+      {divided ? (
+        <>
+          <div className="divided-section">
+            <DividedScreen backgroundColor={generateRandomColor()} />
+            <DividedScreen backgroundColor={generateRandomColor()} />
+          </div>
+          <div className="divided-section">
+            <DividedScreen backgroundColor={generateRandomColor()} />
+            <DividedScreen backgroundColor={generateRandomColor()} />
+          </div>
+        </>
+      ) : (
+       
+        <p>Click to Divide</p>
+      )}
     </div>
   );
-}
+};
 
-export default App;
+export default DividedScreen;
+
